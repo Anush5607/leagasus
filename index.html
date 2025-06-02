@@ -1,0 +1,950 @@
+<html lang="en" class="scroll-smooth" >
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LEAGASUS - Your Online Shopping Destination</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f0f0f 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            min-height: 100vh;
+        }
+        /* Scrollbar for nav-links horizontal scroll */
+        .nav-links::-webkit-scrollbar {
+            height: 6px;
+        }
+        .nav-links::-webkit-scrollbar-thumb {
+            background: #4ecdc4;
+            border-radius: 10px;
+        }
+        .nav-links::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        /* Hide default input clear button on search input for better style */
+        input[type="search"]::-webkit-search-cancel-button {
+            -webkit-appearance: none;
+        }
+    </style>
+</head>
+<body class="relative">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-gradient-to-r from-gray-800 to-gray-700 shadow-md">
+        <div class="max-w-[1200px] mx-auto flex flex-col md:flex-row items-center justify-between px-5 py-3 gap-3 md:gap-0">
+            <a href="#" class="text-3xl font-extrabold bg-gradient-to-r from-red-500 via-teal-400 to-sky-500 bg-clip-text text-transparent select-none flex items-center gap-2" id="logoLink" tabindex="0" aria-label="LEAGASUS Home">
+                <span class="text-4xl">🦅</span> LEAGASUS
+            </a>
+
+            <div class="flex flex-1 max-w-xl w-full md:mx-5">
+                <input type="search" id="searchInput" aria-label="Search for products, brands and more" placeholder="Search for products, brands and more..." class="flex-1 rounded-l-full bg-white/10 backdrop-blur-sm text-white placeholder-gray-300 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-teal-400" />
+                <button aria-label="Search" id="searchBtn" class="rounded-r-full bg-gradient-to-r from-red-500 to-teal-400 px-5 py-3 text-white text-lg hover:scale-105 transition-transform duration-300 flex items-center justify-center">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <button id="accountBtn" class="action-btn bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 text-white hover:bg-white/20 transition-colors flex items-center gap-2 select-none" aria-haspopup="dialog" aria-controls="accountModal" aria-expanded="false" aria-label="Open Account Panel">
+                    <i class="fas fa-user"></i>
+                    <span id="accountText">Account</span>
+                </button>
+                <button id="wishlistBtn" class="action-btn bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 text-white hover:bg-white/20 transition-colors flex items-center gap-2 select-none" aria-pressed="false" aria-label="Toggle Wishlist">
+                    <i class="fas fa-heart"></i>
+                    <span>Wishlist</span>
+                </button>
+                <button id="cartBtn" class="action-btn bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 text-white hover:bg-white/20 transition-colors flex items-center gap-2 select-none relative" aria-haspopup="dialog" aria-controls="cartSidebar" aria-expanded="false" aria-label="Open Shopping Cart">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Cart</span>
+                    <span id="cartCount" class="absolute -top-1 -right-1 bg-gradient-to-r from-red-500 to-red-300 text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center text-white select-none">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="bg-gradient-to-r from-gray-700 to-black shadow-inner" role="navigation" aria-label="Primary Navigation">
+        <div class="max-w-[1200px] mx-auto px-5">
+            <div class="nav-links flex gap-8 overflow-x-auto whitespace-nowrap py-3 scrollbar-thin scrollbar-thumb-teal-400 scrollbar-track-transparent" role="menubar">
+                <button class="nav-link text-white text-sm md:text-base font-semibold hover:text-teal-400 transition-colors" data-filter="deals" role="menuitem" tabindex="0">Today's Deals</button>
+                <button class="nav-link text-white text-sm md:text-base font-semibold hover:text-teal-400 transition-colors" data-filter="Electronics" role="menuitem" tabindex="0">Electronics</button>
+                <button class="nav-link text-white text-sm md:text-base font-semibold hover:text-teal-400 transition-colors" data-filter="Fashion" role="menuitem" tabindex="0">Fashion</button>
+                <button class="nav-link text-white text-sm md:text-base font-semibold hover:text-teal-400 transition-colors" data-filter="Home" role="menuitem" tabindex="0">Home &amp; Kitchen</button>
+                <button class="nav-link text-white text-sm md:text-base font-semibold hover:text-teal-400 transition-colors" data-filter="Books" role="menuitem" tabindex="0">Books</button>
+                <button class="nav-link text-white text-sm md:text-base font-semibold hover:text-teal-400 transition-colors" data-filter="Sports" role="menuitem" tabindex="0">Sports</button>
+                <button class="nav-link text-white text-sm md:text-base font-semibold hover:text-teal-400 transition-colors" data-filter="Beauty" role="menuitem" tabindex="0">Beauty</button>
+                <button class="nav-link text-white text-sm md:text-base font-semibold hover:text-teal-400 transition-colors" data-filter="Automotive" role="menuitem" tabindex="0">Automotive</button>
+                <button class="nav-link text-white text-sm md:text-base font-semibold hover:text-teal-400 transition-colors" data-filter="all" role="menuitem" tabindex="0">All Products</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero bg-gradient-to-br from-red-500/10 to-teal-400/10 py-16 px-5 text-center mb-16" role="banner">
+        <div class="max-w-[1200px] mx-auto">
+            <h1 class="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-red-500 via-teal-400 to-sky-500 bg-clip-text text-transparent mb-6 select-none">Welcome to LEAGASUS</h1>
+            <p class="text-lg md:text-xl text-white/90 mb-8 max-w-3xl mx-auto">Discover amazing products with incredible deals and fast delivery</p>
+            <a href="#featuredProducts" class="inline-block bg-gradient-to-r from-red-500 to-teal-400 text-white text-lg md:text-xl font-semibold rounded-full px-10 py-4 hover:translate-y-[-6px] hover:shadow-lg transition-transform duration-300 select-none" id="shopNowBtn" role="button" tabindex="0" aria-label="Shop Now">Shop Now</a>
+        </div>
+    </section>
+
+    <!-- Categories -->
+    <section class="categories max-w-[1200px] mx-auto px-5 mb-16" aria-label="Product Categories">
+        <h2 class="text-3xl font-extrabold text-center bg-gradient-to-r from-red-500 via-teal-400 to-sky-500 bg-clip-text text-transparent mb-12 select-none">Shop by Category</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-6">
+            <button class="category-card bg-white/5 backdrop-blur-sm rounded-xl p-6 flex flex-col items-center gap-3 hover:bg-white/10 hover:shadow-lg transition-all duration-300 select-none" data-filter="Electronics" type="button" aria-label="Filter by Electronics category" tabindex="0">
+                <div class="text-5xl bg-gradient-to-r from-red-500 via-teal-400 to-sky-500 bg-clip-text text-transparent">📱</div>
+                <h3 class="text-lg font-semibold text-teal-400">Electronics</h3>
+                <p class="text-white/80 text-sm">Latest gadgets &amp; tech</p>
+            </button>
+            <button class="category-card bg-white/5 backdrop-blur-sm rounded-xl p-6 flex flex-col items-center gap-3 hover:bg-white/10 hover:shadow-lg transition-all duration-300 select-none" data-filter="Fashion" type="button" aria-label="Filter by Fashion category" tabindex="0">
+                <div class="text-5xl bg-gradient-to-r from-red-500 via-teal-400 to-sky-500 bg-clip-text text-transparent">👔</div>
+                <h3 class="text-lg font-semibold text-teal-400">Fashion</h3>
+                <p class="text-white/80 text-sm">Trending styles</p>
+            </button>
+            <button class="category-card bg-white/5 backdrop-blur-sm rounded-xl p-6 flex flex-col items-center gap-3 hover:bg-white/10 hover:shadow-lg transition-all duration-300 select-none" data-filter="Home" type="button" aria-label="Filter by Home & Garden category" tabindex="0">
+                <div class="text-5xl bg-gradient-to-r from-red-500 via-teal-400 to-sky-500 bg-clip-text text-transparent">🏠</div>
+                <h3 class="text-lg font-semibold text-teal-400">Home &amp; Garden</h3>
+                <p class="text-white/80 text-sm">Everything for your home</p>
+            </button>
+            <button class="category-card bg-white/5 backdrop-blur-sm rounded-xl p-6 flex flex-col items-center gap-3 hover:bg-white/10 hover:shadow-lg transition-all duration-300 select-none" data-filter="Gaming" type="button" aria-label="Filter by Gaming category" tabindex="0">
+                <div class="text-5xl bg-gradient-to-r from-red-500 via-teal-400 to-sky-500 bg-clip-text text-transparent">🎮</div>
+                <h3 class="text-lg font-semibold text-teal-400">Gaming</h3>
+                <p class="text-white/80 text-sm">Games &amp; accessories</p>
+            </button>
+            <button class="category-card bg-white/5 backdrop-blur-sm rounded-xl p-6 flex flex-col items-center gap-3 hover:bg-white/10 hover:shadow-lg transition-all duration-300 select-none" data-filter="Books" type="button" aria-label="Filter by Books category" tabindex="0">
+                <div class="text-5xl bg-gradient-to-r from-red-500 via-teal-400 to-sky-500 bg-clip-text text-transparent">📚</div>
+                <h3 class="text-lg font-semibold text-teal-400">Books</h3>
+                <p class="text-white/80 text-sm">Best sellers &amp; more</p>
+            </button>
+            <button class="category-card bg-white/5 backdrop-blur-sm rounded-xl p-6 flex flex-col items-center gap-3 hover:bg-white/10 hover:shadow-lg transition-all duration-300 select-none" data-filter="Sports" type="button" aria-label="Filter by Sports category" tabindex="0">
+                <div class="text-5xl bg-gradient-to-r from-red-500 via-teal-400 to-sky-500 bg-clip-text text-transparent">⚽</div>
+                <h3 class="text-lg font-semibold text-teal-400">Sports</h3>
+                <p class="text-white/80 text-sm">Fitness &amp; outdoor</p>
+            </button>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="featured-products max-w-[1200px] mx-auto px-5 mb-20" id="featuredProducts" aria-label="Featured Products">
+        <h2 class="text-3xl font-extrabold text-center bg-gradient-to-r from-red-500 via-teal-400 to-sky-500 bg-clip-text text-transparent mb-12 select-none">Featured Products</h2>
+        <div class="product-grid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8" id="productGrid" role="list" aria-live="polite" aria-relevant="additions removals">
+            <!-- Products generated by JS -->
+        </div>
+    </section>
+
+    <!-- Account Modal -->
+    <div id="accountModal" class="fixed inset-0 bg-black bg-opacity-80 backdrop-blur-sm z-[3000] hidden" role="dialog" aria-modal="true" aria-labelledby="accountModalTitle" tabindex="-1" aria-hidden="true">
+        <div class="modal-content max-w-lg w-[90%] max-h-[80vh] overflow-y-auto bg-gradient-to-r from-gray-800 to-gray-700 rounded-2xl p-8 mx-auto mt-[10vh] relative shadow-lg" role="document">
+            <div class="modal-header flex justify-between items-center border-b border-white/20 pb-4 mb-6">
+                <h2 id="accountModalTitle" class="text-2xl font-bold text-teal-400 select-none">Account</h2>
+                <button aria-label="Close Account Modal" class="close-modal text-white text-3xl font-bold hover:text-red-500 transition-colors" onclick="closeModal('accountModal')">&times;</button>
+            </div>
+            <div id="accountContent" class="text-white text-base">
+                <!-- JS content -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Detail Modal -->
+    <div id="productModal" class="fixed inset-0 bg-black bg-opacity-80 backdrop-blur-sm z-[3000] hidden" role="dialog" aria-modal="true" aria-labelledby="productModalTitle" tabindex="-1" aria-hidden="true">
+        <div class="modal-content max-w-3xl w-[95%] max-h-[80vh] overflow-y-auto bg-gradient-to-r from-gray-800 to-gray-700 rounded-2xl p-8 mx-auto mt-[10vh] relative shadow-lg" role="document">
+            <div class="modal-header flex justify-between items-center border-b border-white/20 pb-4 mb-6">
+                <h2 id="productModalTitle" class="text-2xl font-bold text-teal-400 select-none">Product Details</h2>
+                <button aria-label="Close Product Detail Modal" class="close-modal text-white text-3xl font-bold hover:text-red-500 transition-colors" onclick="closeModal('productModal')">&times;</button>
+            </div>
+            <div id="productDetail" class="text-white text-base flex flex-col md:flex-row gap-8" tabindex="0" aria-live="polite" aria-atomic="true">
+                <!-- JS content -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkoutModal" class="fixed inset-0 bg-black bg-opacity-80 backdrop-blur-sm z-[3000] hidden" role="dialog" aria-modal="true" aria-labelledby="checkoutModalTitle" tabindex="-1" aria-hidden="true">
+        <div class="modal-content max-w-lg w-[90%] max-h-[80vh] overflow-y-auto bg-gradient-to-r from-gray-800 to-gray-700 rounded-2xl p-8 mx-auto mt-[10vh] relative shadow-lg" role="document">
+            <div class="modal-header flex justify-between items-center border-b border-white/20 pb-4 mb-6">
+                <h2 id="checkoutModalTitle" class="text-2xl font-bold text-teal-400 select-none">Checkout</h2>
+                <button aria-label="Close Checkout Modal" class="close-modal text-white text-3xl font-bold hover:text-red-500 transition-colors" onclick="closeModal('checkoutModal')">&times;</button>
+            </div>
+            <div id="checkoutContent" class="text-white text-base" tabindex="0" aria-live="polite" aria-atomic="true">
+                <!-- JS content -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Sidebar -->
+    <aside id="cartSidebar" class="fixed top-0 right-[-100%] w-full max-w-md md:max-w-lg h-full bg-gradient-to-r from-gray-800 to-gray-700 z-[2000] p-6 overflow-y-auto transition-right duration-300 shadow-lg flex flex-col" role="dialog" aria-modal="true" aria-labelledby="cartSidebarTitle" tabindex="-1" aria-hidden="true">
+        <div class="cart-header flex justify-between items-center border-b border-white/20 pb-4 mb-6">
+            <h3 id="cartSidebarTitle" class="text-2xl font-bold text-teal-400 select-none">Shopping Cart</h3>
+            <button aria-label="Close Cart Sidebar" class="close-cart text-white text-3xl font-bold hover:text-red-500 transition-colors" onclick="toggleCart()">&times;</button>
+        </div>
+        <div id="cartItems" class="flex-1 overflow-y-auto text-white text-base" tabindex="0" aria-live="polite" aria-atomic="true">
+            <p class="text-center text-white/70 select-none">Your cart is empty</p>
+        </div>
+        <div id="cartTotal" class="text-center text-2xl font-bold text-teal-400 mt-6 select-none">Total: $0.00</div>
+        <button id="checkoutBtn" class="checkout-btn mt-6 bg-gradient-to-r from-red-500 to-teal-400 text-white text-lg font-semibold rounded-full py-4 hover:scale-105 transition-transform duration-300 select-none" type="button" aria-label="Proceed to Checkout" disabled>Proceed to Checkout</button>
+    </aside>
+
+    <!-- Footer -->
+    <footer class="footer bg-gradient-to-r from-gray-800 to-gray-700 pt-16 pb-8 mt-20">
+        <div class="max-w-[1200px] mx-auto px-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 mb-12">
+                <section class="footer-section" aria-labelledby="footerAboutTitle">
+                    <h3 id="footerAboutTitle" class="text-teal-400 text-xl font-semibold mb-5 select-none">Get to Know Us</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-300 hover:text-teal-400 transition-colors" onclick="showInfo('about')">About LEAGASUS</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-teal-400 transition-colors" onclick="showInfo('careers')">Careers</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-teal-400 transition-colors" onclick="showInfo('press')">Press Releases</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-teal-400 transition-colors" onclick="showInfo('investors')">Investor Relations</a></li>
+                    </ul>
+                </section>
+                <section class="footer-section" aria-labelledby="footerMakeMoneyTitle">
+                    <h3 id="footerMakeMoneyTitle" class="text-teal-400 text-xl font-semibold mb-5 select-none">Make Money with Us</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-300 hover:text-teal-400 transition-colors" onclick="showInfo('sell')">Sell on LEAGASUS</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-teal-400 transition-colors" onclick="showInfo('affiliate')">Become an Affiliate</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-teal-400 transition-colors" onclick="showInfo('advertise')">Advertise Your Products</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-teal-400 transition-colors" onclick="showInfo('publish')">Self-Publish with Us</a></li>
+                    </ul>
+                </section>
+                <section class="footer-section" aria-labelledby="footerPaymentTitle">
+                    <h3 id="footerPaymentTitle" class="text-teal-400 text-xl font-semibold mb-5 select-none">LEAGASUS Payment Products</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-300 hover:text-teal-400 transition-colors" onclick="showInfo('businesscard')">Business Card</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-teal-400 transition-colors" onclick="showInfo('points')">Shop with Points</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-teal-400 transition-colors" onclick="showInfo('reload')">Reload Your Balance</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-teal-400 transition-colors" onclick="showInfo('currency')">Currency Converter</a></li>
+                    </ul>
+                </section>
+                <section class="footer-section" aria-labelledby="footerHelpTitle">
+                    <h3 id="footerHelpTitle" class="text-teal-400 text-xl font-semibold mb-5 select-none">Let Us Help You</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-gray-300 hover:text-teal-400 transition-colors" onclick="showInfo('account')">Your Account</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-teal-400 transition-colors" onclick="showInfo('orders')">Your Orders</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-teal-400 transition-colors" onclick="showInfo('shipping')">Shipping Rates &amp; Policies</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-teal-400 transition-colors" onclick="showInfo('returns')">Returns &amp; Replacements</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-teal-400 transition-colors" onclick="showInfo('help')">Help</a></li>
+                    </ul>
+                </section>
+            </div>
+            <div class="footer-bottom text-center text-gray-400 border-t border-white/20 pt-6 select-none text-sm md:text-base">
+                <p>&copy; 2025 LEAGASUS. All rights reserved. | <a href="#" class="hover:text-teal-400 transition-colors" onclick="showInfo('privacy')">Privacy Policy</a> | <a href="#" class="hover:text-teal-400 transition-colors" onclick="showInfo('terms')">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Success/Error Messages -->
+    <div id="message" class="fixed top-5 right-5 px-6 py-4 rounded-lg font-semibold text-white z-[4000] transform translate-x-[400px] transition-transform duration-300 select-none max-w-xs" role="alert" aria-live="assertive" aria-atomic="true"></div>
+
+<script>
+(() => {
+    // Data for products
+    const products = [
+        {
+            id: 1,
+            title: "Wireless Bluetooth Headphones",
+            category: "Electronics",
+            price: 59.99,
+            rating: 4.5,
+            description: "High-quality wireless headphones with noise cancellation and long battery life.",
+            image: "https://placehold.co/400x300/png?text=Wireless+Bluetooth+Headphones",
+            alt: "Wireless Bluetooth headphones with black and silver design on a white background"
+        },
+        {
+            id: 2,
+            title: "Men's Casual Shirt",
+            category: "Fashion",
+            price: 29.99,
+            rating: 4.0,
+            description: "Comfortable and stylish casual shirt for everyday wear.",
+            image: "https://placehold.co/400x300/png?text=Men's+Casual+Shirt",
+            alt: "Men's casual shirt in blue color displayed on a mannequin"
+        },
+        {
+            id: 3,
+            title: "Stainless Steel Cookware Set",
+            category: "Home",
+            price: 89.99,
+            rating: 4.7,
+            description: "Durable stainless steel cookware set for all your cooking needs.",
+            image: "https://placehold.co/400x300/png?text=Stainless+Steel+Cookware+Set",
+            alt: "Stainless steel cookware set including pots and pans on a kitchen counter"
+        },
+        {
+            id: 4,
+            title: "Gaming Console Controller",
+            category: "Gaming",
+            price: 49.99,
+            rating: 4.3,
+            description: "Ergonomic controller compatible with popular gaming consoles.",
+            image: "https://placehold.co/400x300/png?text=Gaming+Console+Controller",
+            alt: "Black gaming console controller with buttons and joysticks on a white background"
+        },
+        {
+            id: 5,
+            title: "Bestselling Novel Book",
+            category: "Books",
+            price: 14.99,
+            rating: 4.8,
+            description: "A thrilling bestselling novel that keeps you hooked till the last page.",
+            image: "https://placehold.co/400x300/png?text=Bestselling+Novel+Book",
+            alt: "Bestselling novel book with a dark cover and title in white text"
+        },
+        {
+            id: 6,
+            title: "Yoga Mat with Carrying Strap",
+            category: "Sports",
+            price: 24.99,
+            rating: 4.6,
+            description: "Non-slip yoga mat with comfortable cushioning and easy carrying strap.",
+            image: "https://placehold.co/400x300/png?text=Yoga+Mat+with+Carrying+Strap",
+            alt: "Blue yoga mat rolled up with a black carrying strap on a wooden floor"
+        },
+        {
+            id: 7,
+            title: "Smart LED TV 55 inch",
+            category: "Electronics",
+            price: 499.99,
+            rating: 4.4,
+            description: "Ultra HD Smart LED TV with vibrant colors and smart connectivity.",
+            image: "https://placehold.co/400x300/png?text=Smart+LED+TV+55+inch",
+            alt: "Smart LED TV 55 inch displaying colorful nature scene on screen"
+        },
+        {
+            id: 8,
+            title: "Women's Summer Dress",
+            category: "Fashion",
+            price: 39.99,
+            rating: 4.2,
+            description: "Lightweight and stylish summer dress perfect for warm weather.",
+            image: "https://placehold.co/400x300/png?text=Women's+Summer+Dress",
+            alt: "Women's summer dress in floral pattern displayed on a mannequin"
+        },
+        {
+            id: 9,
+            title: "Robot Vacuum Cleaner",
+            category: "Home",
+            price: 199.99,
+            rating: 4.5,
+            description: "Automatic robot vacuum cleaner with smart navigation and scheduling.",
+            image: "https://placehold.co/400x300/png?text=Robot+Vacuum+Cleaner",
+            alt: "Robot vacuum cleaner in white color on a wooden floor"
+        },
+        {
+            id: 10,
+            title: "Wireless Gaming Mouse",
+            category: "Gaming",
+            price: 34.99,
+            rating: 4.1,
+            description: "High precision wireless gaming mouse with customizable buttons.",
+            image: "https://placehold.co/400x300/png?text=Wireless+Gaming+Mouse",
+            alt: "Black wireless gaming mouse with RGB lighting on a dark background"
+        },
+        {
+            id: 11,
+            title: "Cookbook for Beginners",
+            category: "Books",
+            price: 19.99,
+            rating: 4.7,
+            description: "Easy-to-follow cookbook with delicious recipes for beginners.",
+            image: "https://placehold.co/400x300/png?text=Cookbook+for+Beginners",
+            alt: "Cookbook with colorful food images on the cover"
+        },
+        {
+            id: 12,
+            title: "Mountain Bike Helmet",
+            category: "Sports",
+            price: 59.99,
+            rating: 4.3,
+            description: "Lightweight and durable helmet for mountain biking safety.",
+            image: "https://placehold.co/400x300/png?text=Mountain+Bike+Helmet",
+            alt: "Red mountain bike helmet on a white background"
+        },
+        {
+            id: 13,
+            title: "Luxury Perfume Set",
+            category: "Beauty",
+            price: 79.99,
+            rating: 4.6,
+            description: "Elegant perfume set with long-lasting fragrance for special occasions.",
+            image: "https://placehold.co/400x300/png?text=Luxury+Perfume+Set",
+            alt: "Luxury perfume bottles arranged on a reflective surface"
+        },
+        {
+            id: 14,
+            title: "Car Vacuum Cleaner",
+            category: "Automotive",
+            price: 29.99,
+            rating: 4.0,
+            description: "Compact and powerful vacuum cleaner for car interiors.",
+            image: "https://placehold.co/400x300/png?text=Car+Vacuum+Cleaner",
+            alt: "Small handheld car vacuum cleaner on a car seat"
+        },
+        {
+            id: 15,
+            title: "LED Makeup Mirror",
+            category: "Beauty",
+            price: 24.99,
+            rating: 4.4,
+            description: "Portable LED makeup mirror with adjustable brightness.",
+            image: "https://placehold.co/400x300/png?text=LED+Makeup+Mirror",
+            alt: "Round LED makeup mirror with touch controls on a vanity table"
+        }
+    ];
+
+    // Cart data
+    let cart = JSON.parse(localStorage.getItem('leagasus_cart')) || [];
+
+    // Wishlist data (just toggling for demo)
+    let wishlistActive = false;
+
+    // Account logged in state (simple toggle)
+    let loggedIn = JSON.parse(localStorage.getItem('leagasus_loggedIn')) || false;
+    let currentUser = JSON.parse(localStorage.getItem('leagasus_currentUser')) || null;
+
+    // Elements
+    const productGrid = document.getElementById('productGrid');
+    const cartSidebar = document.getElementById('cartSidebar');
+    const cartBtn = document.getElementById('cartBtn');
+    const cartCount = document.getElementById('cartCount');
+    const cartItemsContainer = document.getElementById('cartItems');
+    const cartTotal = document.getElementById('cartTotal');
+    const checkoutBtn = document.getElementById('checkoutBtn');
+    const accountBtn = document.getElementById('accountBtn');
+    const accountText = document.getElementById('accountText');
+    const accountModal = document.getElementById('accountModal');
+    const accountContent = document.getElementById('accountContent');
+    const productModal = document.getElementById('productModal');
+    const productDetail = document.getElementById('productDetail');
+    const checkoutModal = document.getElementById('checkoutModal');
+    const checkoutContent = document.getElementById('checkoutContent');
+    const messageBox = document.getElementById('message');
+    const searchInput = document.getElementById('searchInput');
+    const searchBtn = document.getElementById('searchBtn');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const wishlistBtn = document.getElementById('wishlistBtn');
+    const logoLink = document.getElementById('logoLink');
+    const shopNowBtn = document.getElementById('shopNowBtn');
+
+    // Utility: format price
+    function formatPrice(price) {
+        return `$${price.toFixed(2)}`;
+    }
+
+    // Utility: show message
+    function showMessage(text, type = 'success') {
+        messageBox.textContent = text;
+        messageBox.className = `fixed top-5 right-5 px-6 py-4 rounded-lg font-semibold text-white z-[4000] transform translate-x-0 transition-transform duration-300 select-none ${type === 'success' ? 'bg-gradient-to-r from-green-500 to-green-700' : 'bg-gradient-to-r from-red-600 to-red-800'}`;
+        setTimeout(() => {
+            messageBox.classList.add('translate-x-[400px]');
+            messageBox.classList.remove('translate-x-0');
+        }, 3000);
+    }
+
+    // Save cart and user state to localStorage
+    function saveState() {
+        localStorage.setItem('leagasus_cart', JSON.stringify(cart));
+        localStorage.setItem('leagasus_loggedIn', JSON.stringify(loggedIn));
+        localStorage.setItem('leagasus_currentUser', JSON.stringify(currentUser));
+    }
+
+    // Render stars for rating
+    function renderStars(rating) {
+        const fullStars = Math.floor(rating);
+        const halfStar = rating - fullStars >= 0.5;
+        let starsHtml = '';
+        for (let i = 0; i < fullStars; i++) {
+            starsHtml += '<i class="fas fa-star text-yellow-400"></i>';
+        }
+        if (halfStar) {
+            starsHtml += '<i class="fas fa-star-half-alt text-yellow-400"></i>';
+        }
+        const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+        for (let i = 0; i < emptyStars; i++) {
+            starsHtml += '<i class="far fa-star text-yellow-400"></i>';
+        }
+        return starsHtml;
+    }
+
+    // Render product cards
+    function renderProducts(filter = 'all', searchTerm = '') {
+        productGrid.innerHTML = '';
+        let filteredProducts = products;
+
+        if (filter !== 'all') {
+            if (filter === 'deals') {
+                // For demo, show products with price < 50 as deals
+                filteredProducts = products.filter(p => p.price < 50);
+            } else {
+                filteredProducts = products.filter(p => p.category.toLowerCase() === filter.toLowerCase());
+            }
+        }
+
+        if (searchTerm.trim() !== '') {
+            const term = searchTerm.trim().toLowerCase();
+            filteredProducts = filteredProducts.filter(p => p.title.toLowerCase().includes(term) || p.description.toLowerCase().includes(term));
+        }
+
+        if (filteredProducts.length === 0) {
+            productGrid.innerHTML = `<p class="text-center text-white/70 col-span-full select-none">No products found.</p>`;
+            return;
+        }
+
+        filteredProducts.forEach(product => {
+            const card = document.createElement('article');
+            card.setAttribute('role', 'listitem');
+            card.className = "product-card bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 cursor-pointer flex flex-col overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300 select-none";
+            card.tabIndex = 0;
+            card.setAttribute('aria-label', `${product.title}, price ${formatPrice(product.price)}, rating ${product.rating} stars`);
+            card.innerHTML = `
+                <img src="${product.image}" alt="${product.alt}" class="w-full h-48 object-cover" loading="lazy" />
+                <div class="product-info p-5 flex flex-col flex-1">
+                    <h3 class="product-title text-teal-400 font-semibold text-lg mb-2">${product.title}</h3>
+                    <p class="product-price text-red-500 text-xl font-bold mb-3">${formatPrice(product.price)}</p>
+                    <div class="product-rating flex items-center mb-4" aria-label="Rating: ${product.rating} out of 5 stars">
+                        <div class="stars flex text-yellow-400 text-sm">${renderStars(product.rating)}</div>
+                        <span class="ml-2 text-white/80 text-sm">${product.rating.toFixed(1)}</span>
+                    </div>
+                    <button class="add-to-cart mt-auto bg-gradient-to-r from-red-500 to-teal-400 text-white py-3 rounded-full font-semibold hover:scale-105 transition-transform duration-300" type="button" aria-label="Add ${product.title} to cart">Add to Cart</button>
+                </div>
+            `;
+            // Click on card or Enter/Space opens product detail modal
+            card.addEventListener('click', (e) => {
+                if (e.target.classList.contains('add-to-cart')) return; // handled separately
+                openProductModal(product.id);
+            });
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    if (e.target.classList.contains('add-to-cart')) return;
+                    openProductModal(product.id);
+                }
+            });
+            // Add to cart button
+            const addToCartBtn = card.querySelector('.add-to-cart');
+            addToCartBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                addToCart(product.id);
+            });
+
+            productGrid.appendChild(card);
+        });
+    }
+
+    // Add product to cart
+    function addToCart(productId) {
+        const product = products.find(p => p.id === productId);
+        if (!product) return;
+        const cartItem = cart.find(item => item.product.id === productId);
+        if (cartItem) {
+            cartItem.quantity++;
+        } else {
+            cart.push({ product, quantity: 1 });
+        }
+        updateCartUI();
+        saveState();
+        showMessage(`Added "${product.title}" to cart.`, 'success');
+    }
+
+    // Update cart UI
+    function updateCartUI() {
+        cartCount.textContent = cart.reduce((acc, item) => acc + item.quantity, 0);
+        if (cart.length === 0) {
+            cartItemsContainer.innerHTML = `<p class="text-center text-white/70 select-none">Your cart is empty</p>`;
+            cartTotal.textContent = 'Total: $0.00';
+            checkoutBtn.disabled = true;
+            cartBtn.setAttribute('aria-expanded', 'false');
+            return;
+        }
+        checkoutBtn.disabled = false;
+        cartItemsContainer.innerHTML = '';
+        cart.forEach(({ product, quantity }) => {
+            const itemDiv = document.createElement('div');
+            itemDiv.className = "cart-item flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-white/20 py-4 gap-3";
+            itemDiv.innerHTML = `
+                <div class="cart-item-info flex-1">
+                    <p class="cart-item-name font-semibold text-teal-400">${product.title}</p>
+                    <p class="cart-item-price text-red-500 font-bold">${formatPrice(product.price)}</p>
+                    <div class="quantity-controls flex items-center gap-3 mt-2" aria-label="Quantity controls for ${product.title}">
+                        <button class="quantity-btn bg-gradient-to-r from-red-500 to-teal-400 text-white w-8 h-8 rounded-full flex items-center justify-center" aria-label="Decrease quantity" type="button">-</button>
+                        <span class="text-white select-none" aria-live="polite" aria-atomic="true">${quantity}</span>
+                        <button class="quantity-btn bg-gradient-to-r from-red-500 to-teal-400 text-white w-8 h-8 rounded-full flex items-center justify-center" aria-label="Increase quantity" type="button">+</button>
+                    </div>
+                </div>
+                <button class="remove-item bg-red-600 hover:bg-red-700 text-white text-sm rounded-md px-3 py-1 self-start sm:self-auto" aria-label="Remove ${product.title} from cart" type="button">Remove</button>
+            `;
+            // Quantity buttons
+            const [btnDecrease, , btnIncrease] = itemDiv.querySelectorAll('.quantity-btn');
+            btnDecrease.addEventListener('click', () => {
+                if (quantity > 1) {
+                    quantity--;
+                    updateCartItem(product.id, quantity);
+                } else {
+                    removeCartItem(product.id);
+                }
+            });
+            btnIncrease.addEventListener('click', () => {
+                quantity++;
+                updateCartItem(product.id, quantity);
+            });
+            // Remove button
+            const removeBtn = itemDiv.querySelector('.remove-item');
+            removeBtn.addEventListener('click', () => {
+                removeCartItem(product.id);
+            });
+
+            cartItemsContainer.appendChild(itemDiv);
+        });
+        const totalPrice = cart.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
+        cartTotal.textContent = `Total: ${formatPrice(totalPrice)}`;
+    }
+
+    // Update cart item quantity
+    function updateCartItem(productId, quantity) {
+        const cartItem = cart.find(item => item.product.id === productId);
+        if (!cartItem) return;
+        cartItem.quantity = quantity;
+        updateCartUI();
+        saveState();
+    }
+
+    // Remove cart item
+    function removeCartItem(productId) {
+        cart = cart.filter(item => item.product.id !== productId);
+        updateCartUI();
+        saveState();
+    }
+
+    // Toggle cart sidebar
+    function toggleCart() {
+        if (cartSidebar.classList.contains('right-0')) {
+            cartSidebar.classList.remove('right-0');
+            cartSidebar.classList.add('right-[-100%]');
+            document.body.style.overflow = '';
+            cartBtn.setAttribute('aria-expanded', 'false');
+        } else {
+            cartSidebar.classList.remove('right-[-100%]');
+            cartSidebar.classList.add('right-0');
+            document.body.style.overflow = 'hidden';
+            cartBtn.setAttribute('aria-expanded', 'true');
+            // Focus first focusable element in cart sidebar
+            setTimeout(() => {
+                const focusable = cartSidebar.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                if (focusable) focusable.focus();
+            }, 100);
+        }
+    }
+
+    // Open modal by id
+    function openModal(id) {
+        const modal = document.getElementById(id);
+        if (!modal) return;
+        modal.classList.remove('hidden');
+        modal.setAttribute('aria-hidden', 'false');
+        modal.focus();
+        document.body.style.overflow = 'hidden';
+    }
+
+    // Close modal by id
+    function closeModal(id) {
+        const modal = document.getElementById(id);
+        if (!modal) return;
+        modal.classList.add('hidden');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        // Return focus to the button that opened the modal
+        if (id === 'accountModal') accountBtn.focus();
+        else if (id === 'productModal') productGrid.querySelector('article[tabindex="0"]')?.focus();
+        else if (id === 'checkoutModal') checkoutBtn.focus();
+    }
+
+    // Open account modal
+    function openAccountModal() {
+        renderAccountContent();
+        openModal('accountModal');
+        accountBtn.setAttribute('aria-expanded', 'true');
+    }
+
+    // Render account content
+    function renderAccountContent() {
+        if (loggedIn && currentUser) {
+            accountContent.innerHTML = `
+                <div class="user-info bg-white/10 rounded-xl p-5 mb-6">
+                    <h3 class="text-teal-400 text-xl font-semibold mb-3 select-none">Welcome, ${currentUser.name}</h3>
+                    <p class="text-white/90 mb-2 select-none">Email: ${currentUser.email}</p>
+                    <button id="logoutBtn" class="form-btn bg-gradient-to-r from-red-500 to-teal-400 text-white w-full py-3 rounded-full font-semibold hover:scale-105 transition-transform duration-300 select-none" type="button">Logout</button>
+                </div>
+            `;
+            document.getElementById('logoutBtn').addEventListener('click', () => {
+                loggedIn = false;
+                currentUser = null;
+                accountText.textContent = 'Account';
+                saveState();
+                closeModal('accountModal');
+                showMessage('Logged out successfully.', 'success');
+            });
+        } else {
+            accountContent.innerHTML = `
+                <form id="loginForm" class="space-y-6" novalidate>
+                    <div class="form-group">
+                        <label for="email" class="block mb-2 font-semibold text-teal-400 select-none">Email</label>
+                        <input type="email" id="email" name="email" required placeholder="you@example.com" class="w-full rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-teal-400" />
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="block mb-2 font-semibold text-teal-400 select-none">Password</label>
+                        <input type="password" id="password" name="password" required placeholder="Enter your password" class="w-full rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-teal-400" />
+                    </div>
+                    <button type="submit" class="form-btn bg-gradient-to-r from-red-500 to-teal-400 text-white w-full py-3 rounded-full font-semibold hover:scale-105 transition-transform duration-300 select-none">Login</button>
+                </form>
+            `;
+            const loginForm = document.getElementById('loginForm');
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = loginForm.email.value.trim();
+                const password = loginForm.password.value.trim();
+                if (!email || !password) {
+                    showMessage('Please fill in all fields.', 'error');
+                    return;
+                }
+                // Simple fake login: accept any email/password
+                loggedIn = true;
+                currentUser = { name: email.split('@')[0], email };
+                accountText.textContent = currentUser.name;
+                saveState();
+                closeModal('accountModal');
+                showMessage(`Welcome back, ${currentUser.name}!`, 'success');
+            });
+        }
+    }
+
+    // Open product detail modal
+    function openProductModal(productId) {
+        const product = products.find(p => p.id === productId);
+        if (!product) return;
+        productDetail.innerHTML = `
+            <img src="${product.image}" alt="${product.alt}" class="w-full md:w-1/2 h-auto rounded-xl object-cover shadow-lg" />
+            <div class="product-detail-info flex-1 flex flex-col">
+                <h2 class="text-teal-400 text-3xl font-bold mb-4 select-none">${product.title}</h2>
+                <p class="product-detail-price text-red-500 text-2xl font-extrabold mb-4 select-none">${formatPrice(product.price)}</p>
+                <div class="product-rating flex items-center mb-4" aria-label="Rating: ${product.rating} out of 5 stars">
+                    <div class="stars flex text-yellow-400 text-lg">${renderStars(product.rating)}</div>
+                    <span class="ml-3 text-white/90 text-lg">${product.rating.toFixed(1)}</span>
+                </div>
+                <p class="product-description text-white/80 mb-6 leading-relaxed select-text">${product.description}</p>
+                <button id="modalAddToCartBtn" class="add-to-cart bg-gradient-to-r from-red-500 to-teal-400 text-white py-4 rounded-full font-semibold hover:scale-105 transition-transform duration-300 select-none" type="button" aria-label="Add ${product.title} to cart">Add to Cart</button>
+            </div>
+        `;
+        document.getElementById('modalAddToCartBtn').addEventListener('click', () => {
+            addToCart(product.id);
+            closeModal('productModal');
+        });
+        openModal('productModal');
+    }
+
+    // Open checkout modal
+    function openCheckout() {
+        if (cart.length === 0) {
+            showMessage('Your cart is empty.', 'error');
+            return;
+        }
+        renderCheckoutContent();
+        openModal('checkoutModal');
+        checkoutBtn.setAttribute('aria-expanded', 'true');
+    }
+
+    // Render checkout content
+    function renderCheckoutContent() {
+        const totalPrice = cart.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
+        checkoutContent.innerHTML = `
+            <form id="checkoutForm" class="space-y-6" novalidate>
+                <div class="form-group">
+                    <label for="fullName" class="block mb-2 font-semibold text-teal-400 select-none">Full Name</label>
+                    <input type="text" id="fullName" name="fullName" required placeholder="John Doe" class="w-full rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-teal-400" />
+                </div>
+                <div class="form-group">
+                    <label for="address" class="block mb-2 font-semibold text-teal-400 select-none">Shipping Address</label>
+                    <textarea id="address" name="address" required placeholder="123 Main St, City, Country" rows="3" class="w-full rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white px-4 py-3 resize-none focus:outline-none focus:ring-2 focus:ring-teal-400"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="paymentMethod" class="block mb-2 font-semibold text-teal-400 select-none">Payment Method</label>
+                    <div class="payment-methods grid grid-cols-2 gap-4" role="radiogroup" aria-labelledby="paymentMethodLabel">
+                        <label class="payment-method cursor-pointer bg-white/10 border border-transparent rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 select-none" tabindex="0" role="radio" aria-checked="false" data-method="creditcard">
+                            <img src="https://placehold.co/80x50/png?text=Credit+Card" alt="Credit Card icon" class="mb-2" />
+                            <span class="text-white">Credit Card</span>
+                        </label>
+                        <label class="payment-method cursor-pointer bg-white/10 border border-transparent rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 select-none" tabindex="0" role="radio" aria-checked="false" data-method="paypal">
+                            <img src="https://placehold.co/80x50/png?text=PayPal" alt="PayPal icon" class="mb-2" />
+                            <span class="text-white">PayPal</span>
+                        </label>
+                        <label class="payment-method cursor-pointer bg-white/10 border border-transparent rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 select-none" tabindex="0" role="radio" aria-checked="false" data-method="applepay">
+                            <img src="https://placehold.co/80x50/png?text=Apple+Pay" alt="Apple Pay icon" class="mb-2" />
+                            <span class="text-white">Apple Pay</span>
+                        </label>
+                        <label class="payment-method cursor-pointer bg-white/10 border border-transparent rounded-xl p-4 flex flex-col items-center justify-center transition-all duration-300 select-none" tabindex="0" role="radio" aria-checked="false" data-method="googlepay">
+                            <img src="https://placehold.co/80x50/png?text=Google+Pay" alt="Google Pay icon" class="mb-2" />
+                            <span class="text-white">Google Pay</span>
+                        </label>
+                    </div>
+                </div>
+                <button type="submit" class="form-btn bg-gradient-to-r from-red-500 to-teal-400 text-white w-full py-4 rounded-full font-semibold hover:scale-105 transition-transform duration-300 select-none">Place Order - ${formatPrice(totalPrice)}</button>
+            </form>
+        `;
+
+        const paymentMethods = checkoutContent.querySelectorAll('.payment-method');
+        let selectedMethod = null;
+
+        function selectPaymentMethod(label) {
+            paymentMethods.forEach(pm => {
+                pm.classList.remove('selected', 'border-teal-400', 'bg-teal-900/50');
+                pm.setAttribute('aria-checked', 'false');
+            });
+            label.classList.add('selected', 'border-teal-400', 'bg-teal-900/50');
+            label.setAttribute('aria-checked', 'true');
+            selectedMethod = label.dataset.method;
+        }
+
+        paymentMethods.forEach(pm => {
+            pm.addEventListener('click', () => selectPaymentMethod(pm));
+            pm.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    selectPaymentMethod(pm);
+                }
+            });
+        });
+
+        // Default select first payment method
+        if (paymentMethods.length > 0) {
+            selectPaymentMethod(paymentMethods[0]);
+        }
+
+        const checkoutForm = document.getElementById('checkoutForm');
+        checkoutForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const fullName = checkoutForm.fullName.value.trim();
+            const address = checkoutForm.address.value.trim();
+            if (!fullName || !address) {
+                showMessage('Please fill in all required fields.', 'error');
+                return;
+            }
+            if (!selectedMethod) {
+                showMessage('Please select a payment method.', 'error');
+                return;
+            }
+            // Simulate order placement
+            showMessage('Order placed successfully! Thank you for shopping.', 'success');
+            cart = [];
+            updateCartUI();
+            saveState();
+            closeModal('checkoutModal');
+            toggleCart();
+        });
+    }
+
+    // Filter products by category or deals
+    function filterProducts(filter) {
+        renderProducts(filter);
+    }
+
+    // Scroll to featured products
+    function scrollToProducts() {
+        document.getElementById('featuredProducts').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Search products
+    function searchProducts() {
+        const term = searchInput.value;
+        renderProducts('all', term);
+    }
+
+    // Toggle wishlist (demo only)
+    function toggleWishlist() {
+        wishlistActive = !wishlistActive;
+        wishlistBtn.setAttribute('aria-pressed', wishlistActive.toString());
+        if (wishlistActive) {
+            wishlistBtn.classList.add('bg-white/20');
+            showMessage('Wishlist activated (demo).', 'success');
+        } else {
+            wishlistBtn.classList.remove('bg-white/20');
+            showMessage('Wishlist deactivated (demo).', 'success');
+        }
+    }
+
+    // Show info for footer links (demo)
+    function showInfo(topic) {
+        alert(`Information about: ${topic.charAt(0).toUpperCase() + topic.slice(1)}`);
+    }
+
+    // Close modal on outside click or Escape key
+    function setupModalClose() {
+        ['accountModal', 'productModal', 'checkoutModal'].forEach(id => {
+            const modal = document.getElementById(id);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal(id);
+                }
+            });
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                ['accountModal', 'productModal', 'checkoutModal'].forEach(id => {
+                    const modal = document.getElementById(id);
+                    if (!modal.classList.contains('hidden')) {
+                        closeModal(id);
+                    }
+                });
+                if (cartSidebar.classList.contains('right-0')) {
+                    toggleCart();
+                }
+            }
+        });
+    }
+
+    // Initialize event listeners
+    function init() {
+        renderProducts();
+
+        cartBtn.addEventListener('click', toggleCart);
+        accountBtn.addEventListener('click', openAccountModal);
+        wishlistBtn.addEventListener('click', toggleWishlist);
+        searchBtn.addEventListener('click', searchProducts);
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                searchProducts();
+            }
+        });
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                const filter = link.getAttribute('data-filter');
+                renderProducts(filter);
+            });
+        });
+        checkoutBtn.addEventListener('click', openCheckout);
+        logoLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            renderProducts('all');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        shopNowBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            scrollToProducts();
+        });
+
+        setupModalClose();
+
+        // Update account text on load
+        if (loggedIn && currentUser) {
+            accountText.textContent = currentUser.name;
+        }
+        updateCartUI();
+    }
+
+    // Run init on DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', init);
+})();
+</script>
+</body>
+</html>
